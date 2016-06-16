@@ -1,15 +1,19 @@
 #!/usr/bin/python
 
 import MySQLdb
+from utils.mysql_python import MysqlPython
+from models.User import User
 
-# connect
-db = MySQLdb.connect(host="thinkman-wang.com", user="thinkman", passwd="Ab123456", db="db_thinknews")
+if __name__ == '__main__':  
+    print 'Hello World'  
+    myDB = MysqlPython('thinkman-wang.com', 'thinkman', 'Ab123456', 'db_thinknews')
+    
+    szSql = 'select * from user'
+    result = myDB.select_advanced(szSql)
 
-cursor = db.cursor()
-cursor.execute("SELECT * FROM user")
-db.commit()
-
-numrows = int(cursor.rowcount)
-for x in range(0, numrows):
-    row = cursor.fetchone()
-    print row[0], "-->", row[1], "-->", row[2]
+    for obj in result :
+        user = User()
+        user.id, user.user_name, user.password = obj
+        
+        print("%d | %s | %s" % (user.id, user.user_name, user.password))
+        
