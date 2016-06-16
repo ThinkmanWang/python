@@ -3,6 +3,7 @@
 import MySQLdb
 from utils.mysql_python import MysqlPython
 from models.User import User
+from utils.user_db_utils import * 
 
 if __name__ == '__main__':  
     print 'Hello World'  
@@ -15,5 +16,9 @@ if __name__ == '__main__':
         user = User()
         user.id, user.user_name, user.password = obj
         
+        print("%d | %s | %s" % (user.id, user.user_name, user.password))
+    
+    lstUser = get_all_users()
+    for user in lstUser :
         print("%d | %s | %s" % (user.id, user.user_name, user.password))
         
