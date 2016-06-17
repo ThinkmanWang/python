@@ -3,9 +3,9 @@
 import MySQLdb
 from utils.mysql_python import MysqlPython
 from models.User import User
-from utils.user_db_utils import * 
-
-if __name__ == '__main__':  
+from utils.user_db_utils import *  
+    
+def main():
     print 'Hello World'  
     myDB = MysqlPython('thinkman-wang.com', 'thinkman', 'Ab123456', 'db_thinknews')
     
@@ -34,3 +34,5 @@ if __name__ == '__main__':
     for user in lstUser :
         print("%d | %s | %s" % (user.id, user.user_name, user.password))    
     
+if __name__ == '__main__': 
+    main();
