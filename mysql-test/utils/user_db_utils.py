@@ -24,25 +24,28 @@ def get_all_users() :
         lstUser.append(user)
         
     return lstUser
-
-
-dbconfig = {
-    "host": "thinkman-wang.com"
-    , "database": "db_thinknews"
-    , "user": "thinkman"
-    , "password": "Ab123456"
-}
         
-def get_all_user_from_pool():
-    pool = PooledDB(MySQLdb, 5, host='thinkman-wang.com', user='thinkman', passwd='Ab123456', db='db_thinknews', port=3306);
-    conn = pool.connection()
+g_dbPool = PooledDB(MySQLdb, 5, host='thinkman-wang.com', user='thinkman', passwd='Ab123456', db='db_thinknews', port=3306);
+
+def get_all_user_from_pool():    
+    conn = g_dbPool.connection()
     cur=conn.cursor()
     SQL="select * from user"  
-    r=cur.execute(SQL)
-    r=cur.fetchall()
-    print(r)
+    cur.execute(SQL)
+    
+    rows=cur.fetchall()
+    
+    lstUser = []
+    for row in rows:
+        user = User()
+        user.id = row[0]
+        user.user_name = row[1]
+        user.password = row[2]
+        lstUser.append(user)
+    
     cur.close()
     conn.close()    
+    return lstUser
     
     
     
