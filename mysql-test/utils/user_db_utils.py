@@ -44,8 +44,33 @@ def get_all_user_from_pool():
         lstUser.append(user)
 
     cur.close()
-    conn.close()
     return lstUser
 
+def login(user_name, password):
+    conn = g_dbPool.connection()
+    cur=conn.cursor()    
+    #cur.execute("select * from view_user where user_name=%s AND password=%s" % (user_name, password))
+    cur.execute("select * from view_user where user_name=\"18621675203\" AND password=\"a0a475cf454cf9a06979034098167b\"")
+    
+    rows=cur.fetchall()
+    lstUser = None
+    for row in rows:
+        user = User()
+        user.id = row[0]
+        user.user_name = row[1]
+        user.password = row[2]
+        user.token = row[3]
+        user.create_time = row[4]
+        user.expire_time = row[5]
+        lstUser.append(user)    
+        
+    cur.close()
+    
+    if (lstUser != None and lstUser.count >= 1):
+        return lstUser[0]
+    else:
+        return None
+    
+    
 
 

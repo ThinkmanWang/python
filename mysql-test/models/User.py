@@ -2,9 +2,15 @@ class User(object):
     id = 0
     user_name = ''
     password = ''
-    
-    def __init__(self, id=None, user_name=None, password=None):
+    token = ""
+    create_time = 0
+    expire_time = 0
+        
+    def __init__(self, id=None, user_name=None, password=None, token=None, create_time=0, expire_time=0):
         self.id = id
         self.user_name = user_name
-        self.password = password
+        self.password = password    
+        self.token = token
+        self.create_time = create_time
+        self.expire_time = expire_time
     
