@@ -7,7 +7,9 @@ print(sys.path)
 
 from mysql_python import MysqlPython
 from models.User import User
-import mysql.connector.pooling.MySQLConnectionPool
+
+import MySQLdb
+from DBUtils.PooledDB import PooledDB
 
 def get_all_users() :
     myDB = MysqlPython('thinkman-wang.com', 'thinkman', 'Ab123456', 'db_thinknews')
@@ -31,13 +33,16 @@ dbconfig = {
     , "password": "Ab123456"
 }
         
-cnxpool = mysql.connector.pooling.MySQLConnectionPool(pool_name = "mypool", pool_size = 3, **dbconfig)
-
 def get_all_user_from_pool():
-    conn = cnxpool.get_connection()
-    cursor = conn.cursor();
-    cursor.execute("select * from user");    
-    list = cursor.fetchall();
+    pool = PooledDB(MySQLdb, 5, host='thinkman-wang.com', user='thinkman', passwd='Ab123456', db='db_thinknews', port=3306);
+    conn = pool.connection()
+    cur=conn.cursor()
+    SQL="select * from user"  
+    r=cur.execute(SQL)
+    r=cur.fetchall()
+    print(r)
+    cur.close()
+    conn.close()    
     
     
     
