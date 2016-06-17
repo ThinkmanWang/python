@@ -22,3 +22,4 @@ if __name__ == '__main__':
     for user in lstUser :
         print("%d | %s | %s" % (user.id, user.user_name, user.password))
         
+    get_all_user_from_pool();
